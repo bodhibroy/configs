@@ -1,0 +1,287 @@
+;;; Bodhi's dotemacs
+;;; ================
+
+;;; Created:  Sometime during August 2011, when I was working in
+;;;           Virtual Labs
+
+;;; Versions: Unknown.  Must be in hundreds by now, given the number
+;;; of experiments that has gone through it.  Have to keep it in
+;;; version control somehow.
+
+;;; This file is released under CC-by-NC-SA v3.0.
+;;; http://creativecommons.org/licenses/by-nc-sa/3.0/
+
+;;; History of my dotemacs
+;;; ======================
+
+;;; Most of the initial customizations are borrowed from
+;;; Prof. Venkatesh Choppella, my Emacs guru.  Some of my
+;;; customizations somehow found way into his dotemacs.  He also taught me to
+;;; write Elisp, org-mode, Scheme, scribble and only a ton of other
+;;; things.  He also writes pretty awesome Makefiles.
+
+;;; Profs. Jaya Sreevalsan Nair and Shrisha Rao were kind enough to
+;;; lend their dotemacs files as well.  I use the linum-mode suggested
+;;; by Prof. Nair.  Coincidentally, Prof. Nair also taught me how to use
+;;; Emacs.  She is also my official LaTeX guru.  Prof. Rao was kind of
+;;; psyched when I asked him to show me a few tricks, he ended up
+;;; showing me "psychoanalysis-pinhead", amongst others, which was really
+;;; funny.  He e-mailed me his dotemacs file named as "dotemacs", which
+;;; gave me the idea of naming it like that.
+
+;;; Balaji (Yahoo!) also sent me his dotemacs, which can be found at
+;;; https://github.com/balajijegan/dotfiles/blob/master/emacs/.emacs.
+;;; He heavily uses GNUS, so GNUS enthusiasts can try some of his tweaks.
+
+;;; End of history
+;;; ==============
+
+;;; For full screen on starting Emacs
+(defun toggle-fullscreen ()
+  (interactive)
+  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+	    		 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+	    		 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+)
+(toggle-fullscreen)
+
+;;; To disable the splash screen
+(setq inhibit-splash-screen t)
+
+;;; Load custom libraries
+;;; The libraries are taken from Prof. Choppella's collection
+;;; They can be found at
+;;; http://pascal.iiit.ac.in/~bodhi/configs/sys.lib.tar.gz
+;;; If you see me loading any weird files, it is probably taken from
+;;; there.
+
+;; recursively add ~/sys/lib/emacs to the load path
+(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+    (let* ((my-lisp-dir "~/sys/lib/emacs/")
+	   (default-directory my-lisp-dir))
+      (setq load-path (cons my-lisp-dir load-path))
+      (normal-top-level-add-subdirs-to-load-path)))
+
+
+;;; Display Battery Status, has stopped working in unstable Emacs 24.0, downloaded and compiled on this system.
+;(display-battery-mode t)
+
+;;; Show Column Number
+(setq column-number-mode t)
+
+;;; To show date and time
+(setq display-time-day-and-date t
+     display-time-12hr-format t)
+     (display-time)
+
+;;; Autocomplete
+(add-to-list 'load-path "/home/bodhi/sys/lib/emacs/autocomplete/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "/home/bodhi/sys/lib/emacs/autocomplete//ac-dict")
+(ac-config-default)
+
+;;; Midnight Mode - Kills buffers which are inactive for a long time
+(require 'midnight)
+(midnight-delay-set 'midnight-delay "12:00am")
+
+;;; Use aspell instead of ispell.  I read somewhere that aspell was
+;;; better than ispell.  Moreover, aspell comes default in
+;;; debian-based systems, whereas ispell does not.
+;;; ALERT: To set aspell as the default spell-check
+;;; you might need to install aspell and aspell-en
+(setq-default ispell-program-name "aspell")
+
+;;; Set English as the default dictionary
+(setq ispell-dictionary "en")
+
+;;; Turn on flyspell mode
+(defun turn-on-flyspell () (flyspell-mode t))
+(add-hook 'find-file-hooks 'turn-on-flyspell)
+
+;;; Turn on Auto-fill
+(add-hook 'find-file-hooks 'turn-on-auto-fill)
+
+;;; Turn on Linum-mode
+(add-hook 'find-file-hook '(lambda () (linum-mode t)))
+
+;;; Enable ido-mode on startup
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode t)
+
+
+;;; Turn on parentheses match highlighting
+(show-paren-mode 1)
+
+;;; Turn on Syntax Coloring
+(global-font-lock-mode 1)
+
+;;; Enable AUCTeX in Emacs (making LaTeX look cool like Org)
+(require 'tex-site)
+
+;;; RefTeX mode for bibliography
+(defun org-mode-reftex-setup ()
+(load-library "reftex")
+(and (buffer-file-name)
+(file-exists-p (buffer-file-name))
+(reftex-parse-all))
+(define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+)
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
+
+;;; Math mode for LaTeX (obtained from http://www.terminally-incoherent.com/blog/2007/12/13/emacs-with-auctex-as-a-latex-ide/)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+;;; Global Keys
+(global-set-key "\C-cc" 'compile) ;Compile shortcut
+(global-set-key "\C-c\C-g" 'goto-line) ; Goto-line
+(global-set-key "\C-xk" 'kill-this-buffer) ; Kill buffer without confirmation
+
+;;; Show Filename on Titlebar
+(setq frame-title-format
+     (concat  "%b - Emacs@" system-name))
+
+;;; Scroll one line at a time
+(setq scroll-lock-mode t)
+(setq scroll-step 1)
+
+;;; Customized mode-line
+;; (setq default-mode-line-format
+;;       (list
+;;        "-"
+;;        'mode-line-mule-info
+;;        'mode-line-modified
+;;        "   "
+;;        '(line-number-mode "L%l--")
+;;        '(column-number-mode "C%c--")
+;;        '(-10 . "%p")
+;;        'mode-line-frame-identification
+;;        'mode-line-buffer-identification
+;;        "--"
+;;        `(vc-mode vc-mode)
+;;        "--"
+;;        "  Battery "
+;;        'global-mode-string
+;;        "   %[("
+;;        'mode-name
+;;        'mode-line-process
+;;        'minor-mode-alist
+;;        "%n"
+;;        ")%]--"
+;;        '(which-func-mode ("" which-func-format "--"))
+;;        "-%-"))
+
+;;; Org-indent-mode for hiding unnecessary *
+(add-hook 'org-mode-hook
+          (lambda ()
+            (org-indent-mode t))
+          t)
+
+;;; Use y/n instead of  yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;;; Load Latest org-mode Library
+;(setq load-path (cons "/usr/local/share/emacs/site-lisp" load-path))
+
+(put 'upcase-region 'disabled nil)
+
+;;; Some of the following set of stuff is borrowed from Sankalp's .emacs
+
+;;; turn on visual bell
+(setq visible-bell t)
+
+;;; If at beginning of a line, don't make me C-k twice.
+(setq kill-whole-line t)
+
+;;; Dired stuff
+;;; ===========
+(load "lisp/cd.el")
+(global-set-key "\C-cd" 'cd-buffer-dir)
+(global-set-key "\C-cy" 'cd-buffer-dir)
+
+(add-hook 'dired-load-hook
+  (function
+    (lambda ()
+      (setq dired-recursive-copies 'top)
+      (setq dired-dwim-target t) ;
+					; set dired-do-rename's
+					; default
+					; target to the
+					; other window
+      (define-key dired-mode-map "b" 'browse-url-of-dired-file)
+)))
+
+;;; dired directory delete/copy behaviour customization
+(setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
+
+;;; No Menu Bar
+(menu-bar-mode -1)
+;;; No tool bar
+(tool-bar-mode -1)
+
+;;; No Scrollbar
+(scroll-bar-mode -1)
+
+;;; auto-indent on newline
+(defun set-newline-and-indent ()
+(local-set-key (kbd "RET") 'newline-and-indent))
+(add-hook 'lisp-mode-hook 'set-newline-and-indent)
+(add-hook 'sh-mode-hook 'set-newline-and-indent)
+(add-hook 'cc-mode-hook 'set-newline-and-indent)
+(add-hook 'scheme-mode-hook 'set-newline-and-indent)
+(add-hook 'shell-script-mode-hook 'set-newline-and-indent)
+(add-hook 'emacs-lisp-mode-hook 'set-newline-and-indent)
+
+;;; start the emacs server always
+;;; useful if emacs is to be specified as default SVN editor
+;;; set emacs as the default editor for SVN by
+;;; export SVN_EDITOR=emacsclient
+(setenv "EDITOR" "/usr/bin/emacsclient")
+(server-start)
+
+;;; openwith minor mode
+;;; for opening pdfs in evince, mp3s in some player etc...
+;;; (setq load-path (cons "~/.emacs.d/openwith/" load-path))
+;;; (add-to-list 'load-path "~/.emacs.d/openwith/")
+;;; (require 'openwith)
+;;; (setq openwith-associations
+;;;       '(("\\.pdf\\'" "evince" (file))
+;;;         ("\\.ps\\'"  "evince" (file))
+;;;        ("\\.mp3\\'" "amarok" (file))
+;;;         ("\\.nfo\\'" "nfoview" (file))
+;;;         ;; ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "vlc" ("-idx" file))
+;;;         ;; ("\\.\\(?:jp?g\\|png\\)\\'" "display" (file))
+;;;         ))
+;;; (openwith-mode t)
+
+;;; Setting default font-size applies to all buffers :: Taken from
+;;; http://stackoverflow.com/questions/294664/how-to-set-the-font-size-in-emacs
+(set-face-attribute 'default nil :height 120)
+
+;;; Starting EMMS in emacs
+(require 'emms-setup)
+(emms-standard)
+(emms-default-players)
+(setq emms-playlist-buffer-name "*Music*")
+
+;;; Show the current track each time EMMS starts to play a track with
+;;; "NP : "
+(add-hook 'emms-player-started-hook 'emms-show)
+(setq emms-show-format "Now Playing : %s")
+
+;;; When asked for emms-play-directory, always start from this one
+(setq emms-source-file-default-directory "/media/disk1/")
+
+;;;shortcuts for emms
+(global-set-key [f12]  'emms-add-directory)
+(global-set-key [f11]  'emms-add-playlist)
+(global-set-key [f10]  'emms-playlist-mode-go)
+(global-set-key [f9]  'emms-add-file)
+(global-set-key [f8]  'emms-start)
+(global-set-key [f8] 'emms-pause)
+(global-set-key [f5] 'emms-stop)
+;(define-key emms-mode-map "p" 'emms-previous)
+;(define-key emms-mode-map "n" 'emms-next)

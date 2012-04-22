@@ -1,0 +1,15 @@
+# This script is used to automatically connect to a wifi network of my
+# choice (using networking), in this case, PASCAL.  I wrote this
+# script when I used on all the stupid Lenovo S10-3Cs at Virtual Labs
+# and wicd refused to work, for albeit reasons.  I could have
+# soft-wired the ESSID, but decided against it, as I used to use
+# PASCAL 90% of the time, and I didn't have the comfort of using GnomeX.
+
+
+ifconfig wlan0 down;
+sleep 1;
+ifconfig wlan0 up;
+sleep 1;
+iwlist sc;
+iwconfig wlan0  essid PASCAL;
+dhclient wlan0 -v;

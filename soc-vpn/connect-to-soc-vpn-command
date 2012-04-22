@@ -1,0 +1,1 @@
+openvpn --config socvpn.ovpn --ca ca.txt
