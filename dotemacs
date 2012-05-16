@@ -76,10 +76,10 @@
      (display-time)
 
 ;;; Autocomplete
-(add-to-list 'load-path "/home/bodhi/sys/lib/emacs/autocomplete/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "/home/bodhi/sys/lib/emacs/autocomplete//ac-dict")
-(ac-config-default)
+;;; (add-to-list 'load-path "/home/bodhi/sys/lib/emacs/autocomplete/")
+;;; (require 'auto-complete-config)
+;;; (add-to-list 'ac-dictionary-directories "/home/bodhi/sys/lib/emacs/autocomplete//ac-dict")
+;;; (ac-config-default)
 
 ;;; Midnight Mode - Kills buffers which are inactive for a long time
 (require 'midnight)

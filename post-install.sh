@@ -15,7 +15,7 @@
 
 aptitude update;
 
-aptitude install emacs texlive gcc mplayer emms vlc apache2 openssh-server
+aptitude install emacs texlive-full gcc mplayer emms vlc apache2 openssh-server
 aspell aspell-en nmap unrar-free acpi cheese flashplugin-nonfree
 subversion git graphviz sudo ;
 
