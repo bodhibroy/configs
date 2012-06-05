@@ -1,0 +1,4 @@
+alias pascal="ssh pascal.iiit.ac.in"
+alias sunfire="ssh sunfire.comp.nus.edu.sg"
+alias tembusu="ssh tembusu.comp.nus.edu.sg"
+alias janastu="ssh pop.janastu.org"
