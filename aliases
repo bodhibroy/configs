@@ -5,3 +5,4 @@ alias janastu="ssh pop.janastu.org"
 alias swl="ssh swl.comp.nus.edu.sg"
 alias mplayer="mplayer -loop 0"
 alias fire="ssh fire.d2.comp.nus.edu.sg"
+
