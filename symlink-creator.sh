@@ -1,4 +1,6 @@
 # creates symbolic links for my vimrc and .emacs
 #This file should exist in ~/sys/configs
-ln -s /home/bodhi/sys/configs/dotemacs /home/bodhi/.emacs
-ln -s /home/bodhi/sys/configs/vimrc /home/bodhi/.vimrc
+var=$(pwd)
+echo $var
+ln -s $var/dotemacs.el /home/bodhi/.emacs
+ln -s $var/vimrc /home/bodhi/.vimrc
