@@ -162,6 +162,8 @@
 
 ;;; Load Projectile
 (projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
