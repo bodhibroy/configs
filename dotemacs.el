@@ -36,16 +36,6 @@
 ;;; End of history
 ;;; ==============
 
-;;; For full screen on starting Emacs
-(defun toggle-fullscreen ()
-  (interactive)
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-	    		 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-	    		 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
-)
-(toggle-fullscreen)
-
 ;;; To disable the splash screen
 (setq inhibit-splash-screen t)
 
@@ -82,7 +72,7 @@
 ;;; Debian-based systems, whereas ispell does not.
 ;;; ALERT: To set aspell as the default spell-check
 ;;; you might need to install aspell and aspell-en
-(setq-default ispell-program-name "aspell")
+(setq ispell-program-name "/usr/local/bin/aspell")
 
 ;;; Set English as the default dictionary
 (setq ispell-dictionary "en")
@@ -137,10 +127,6 @@
 
 ;;; If at beginning of a line, don't make me C-k twice.
 (setq kill-whole-line t)
-
-;;; Setting default font-size applies to all buffers :: Taken from
-;;; http://stackoverflow.com/questions/294664/how-to-set-the-font-size-in-emacs
-(set-face-attribute 'default nil :height 120)
 
 ;;; Adding Melpa repositories
 (when (>= emacs-major-version 24)
