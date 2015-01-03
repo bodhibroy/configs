@@ -14,6 +14,8 @@
 ;;; History of my dotemacs
 ;;; ======================
 
+;;; * Everything was cleaned and written during Christmas 2014. 
+
 ;;; Most of the initial customizations are borrowed from
 ;;; Prof. Venkatesh Choppella, my Emacs guru.  Some of my
 ;;; customizations somehow found way into his dotemacs.  He also taught me to
@@ -164,6 +166,12 @@
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
+
+;;; Open PDFs in evince
+(require 'openwith)
+(setq openwith-associations '(("\\.pdf\\'" "evince" (file))))
+(openwith-mode t)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
