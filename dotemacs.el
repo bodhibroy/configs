@@ -74,7 +74,7 @@
 ;;; Debian-based systems, whereas ispell does not.
 ;;; ALERT: To set aspell as the default spell-check
 ;;; you might need to install aspell and aspell-en
-(setq ispell-program-name "/usr/local/bin/aspell")
+(setq ispell-program-name "/usr/bin/aspell")
 
 ;;; Set English as the default dictionary
 (setq ispell-dictionary "en")
