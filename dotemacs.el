@@ -27,7 +27,7 @@
 ;;; by Prof. Nair.  Coincidentally, Prof. Nair also taught me how to use
 ;;; Emacs.  She is also my official LaTeX guru.  Prof. Rao was kind of
 ;;; psyched when I asked him to show me a few tricks, he ended up
-;;; showing me "psychoanalysis-pinhead", amongst others, which was really
+;;; showing me "psychoanalyze-pinhead", amongst others, which was really
 ;;; funny.  He e-mailed me his dotemacs file named as "dotemacs", which
 ;;; gave me the idea of naming it like that.
 
