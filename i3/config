@@ -14,12 +14,12 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-# font pango:DejaVu Sans Mono 10
+ font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -148,6 +148,20 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
+    	colors {
+               # Whole color settings
+               background #7983AB
+               statusline #000000
+               separator  #666666
+
+               # Type             border  background font
+               focused_workspace  #008fff #007fff #ffffff
+               active_workspace   #333333 #5f676a #ffffff
+               inactive_workspace #333333 #222222 #888888
+               urgent_workspace   #aa0000 #990000 #ffffff
+	 }
+	 # i3bar position
+    	 position bottom
 }
 
 # Bodhi
@@ -155,7 +169,7 @@ bar {
 exec --no-startup-id nm-applet
 exec i3-msg 'workspace 1:Firefox;exec firefox;'
 exec i3-msg 'workspace 2:Chrome;exec google-chrome;'
-exec dropbox start
+exec dropbox start --fake-transparency 222222
 
 # Alsa controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
