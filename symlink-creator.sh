@@ -4,3 +4,4 @@ ln -sFv $(pwd)/dotemacs.el $HOME/.emacs
 ln -sFv $(pwd)/vimrc $HOME/.vimrc
 ln -sFv $(pwd)/i3 $HOME/.i3
 ln -sFv $(pwd)/xmodmap $HOME/.xmodmap
+ln -sFv $(pwd)/change-wallpaper.sh $HOME/.change-wallpaper.sh
