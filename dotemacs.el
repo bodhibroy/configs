@@ -38,6 +38,10 @@
 ;;; End of history
 ;;; ==============
 
+;;;Master list of packages
+
+;;; ac-helm projectile helm-projectile sublime-themes openwith
+
 ;;; To disable the splash screen
 (setq inhibit-splash-screen t)
 
@@ -141,19 +145,23 @@
 (add-to-list 'load-path "~/.emacs.d")
 
 ;;; load custom theme
+;;; package to install: sublime-themes
 (load-theme 'wilson t)
 
 ;;; load Helm
+;;; packages to install: ac-helm
 (require 'helm-config)
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
 
 ;;; Load Projectile
+;;; packages to install: projectile helm-projectile
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
 ;;; Open PDFs in evince
+package to install: openwith
 (require 'openwith)
 (setq openwith-associations '(("\\.pdf\\'" "evince" (file))))
 (openwith-mode t)
